@@ -4,6 +4,7 @@
 -export([to_json/2]).
 -export([content_types_provided/2]).
 
+-include("pera.hrl").
 -include_lib("webmachine/include/webmachine.hrl").
 
 %%========================================
@@ -17,6 +18,9 @@ content_types_provided(Req, Context) ->
 %%========================================
 %% Resource functions
 %%========================================
-to_json(ReqData, State) ->
-  {pera_processes:to_json(pera_processes:all()), ReqData, State}.
-
+to_json(Req, State) ->
+  Response = case wrq:get_qs_value("registered", Req) of
+    "true" -> pera_processes:all_registered();
+    _      -> pera_processes:all()
+  end,
+  {(Response#pera_response.serializer):to_json(Response#pera_response.raw), Req, State}.
