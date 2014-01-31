@@ -1,0 +1,17 @@
+{application, pera,
+ [
+  {description, "pera"},
+  {vsn, "1"},
+  {modules, []},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib,
+                  inets,
+                  crypto,
+                  mochiweb,
+                  webmachine
+                 ]},
+  {mod, { pera_app, []}},
+  {env, []}
+ ]}.
