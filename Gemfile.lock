@@ -1,3 +1,9 @@
+GIT
+  remote: https://github.com/madtrick/guard-eunit
+  revision: 2d7e469fa28c9503092ebdaf596fcf732ca31ba2
+  specs:
+    guard-eunit (0.0.2)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -35,4 +41,5 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  guard-eunit!
   guard-shell
