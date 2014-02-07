@@ -18,9 +18,9 @@ to_hal(Data, _) ->
     [pera_hal:link(<<"self">>, <<"/processes">>, [])],
     [{<<"processes">>, [
           pera_hal:resource(
-            [pera_hal:link(<<"self">>, <<"/processes/", (pid_to_binary(Process))/binary>>, [])],
+            [pera_hal:link(<<"self">>, <<"/processes/", (pera_utils:pid_to_binary(Process))/binary>>, [])],
             [],
-            [{<<"pid">>, pid_to_binary(Process)}]
+            [{<<"pid">>, pera_utils:pid_to_binary(Process)}]
           )
           || Process <- Data]
       }],
@@ -29,8 +29,3 @@ to_hal(Data, _) ->
 
   pera_hal_serializer:to_json(Resource).
 
--spec pid_to_binary(
-  Pid :: pid()
-  ) -> binary().
-pid_to_binary(Pid) ->
-  list_to_binary(pid_to_list(Pid)).

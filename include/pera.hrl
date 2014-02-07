@@ -8,7 +8,7 @@
   { hreflang    , binary() }.
 
 -record(pera_hal_link_data, {
-    rel     :: binary(),
+    rel     :: binary() | atom(),
     href    :: binary(),
     options :: list(pera_hal_link_option())
   }).
@@ -20,6 +20,6 @@
   }).
 
 -type pera_hal_link()              :: #pera_hal_link_data{}.
--type pera_hal_resource_property() :: {binary(), atom() | binary() | boolean() | integer() | list()}.
+-type pera_hal_resource_property() :: {binary() | atom(), atom() | binary() | boolean() | integer() | list()}.
 -type pera_hal_resource()          :: #pera_hal_resource_data{}.
--type pera_hal_embedded()          :: {Rel :: binary(), Resource :: pera_hal_resource() | list(pera_hal_resource())}.
+-type pera_hal_embedded()          :: {Rel :: binary() | atom(), Resource :: pera_hal_resource() | list(pera_hal_resource())}.

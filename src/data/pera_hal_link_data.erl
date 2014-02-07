@@ -8,7 +8,7 @@
 %% API
 %%========================================
 -spec new(
-  Rel     :: binary(),
+  Rel     :: atom() | binary(),
   HREF    :: binary(),
   Options :: list(pera_hal_link_option())
   ) -> pera_hal_link().

@@ -81,7 +81,7 @@ resource_embeddeds_to_json_object(Embeddeds)->
 
 -spec resource_embeddeds_to_json_object(
   Embeddeds :: list(pera_hal_embedded()),
-  Acc       :: list({binary(), pera_json:object()})
+  Acc       :: list({binary() | atom(), pera_json:object()})
   ) -> list(pera_json:json_property()).
 resource_embeddeds_to_json_object([], Acc) ->
   Acc;
