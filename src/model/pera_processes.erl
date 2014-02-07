@@ -5,11 +5,11 @@
 -export([all_registered/0]).
 
 %% @doc Return all processes running in the current node
--spec all() -> #pera_response{}.
+-spec all() -> list(pid()).
 all() ->
-  pera_response:new(erlang:processes(), pera_processes_serializer).
+  erlang:processes().
 
 %% @doc Return all the registerd processes in the current node
--spec all_registered() -> #pera_response{}.
+-spec all_registered() -> list(atom()).
 all_registered() ->
-  pera_response:new(erlang:registered(), pera_processes_serializer).
+  erlang:registered().

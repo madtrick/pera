@@ -1,7 +1,3 @@
--record(pera_response, {
-  raw        :: any(),
-  serializer :: module()
-}).
 -type pera_hal_link_option() ::
   { templated   , boolean()} |
   { type        , binary() } |
