@@ -1,30 +1,28 @@
--module(pera_rep_root).
+-module(pera_rep_memory).
 -include("pera_hal_macros.hrl").
 
 %% @hidden
 %% @doc Module that returns a representation
-%% for the root of the system
+%% for the memory of the system
 %%
 %% Currenty only the HAL format is supported.
 
--export([to_hal/1]).
+-export([to_hal/2]).
 
 %%========================================
 %% API
 %%========================================
 
-%% @doc Returns a representation for the root of the system
+%% @doc Returns a representation for the memory of the system
 -spec to_hal(
+  Memory  :: list({atom(), any()}),
   Options :: list({atom(), any()})
   ) -> binary().
-to_hal(_) ->
+to_hal(Memory, _) ->
   Resource = ?HAL_RESOURCE(
-    [
-      ?HAL_LINK(self, <<"/">>, []),
-      ?HAL_LINK(memory, <<"/memory">>, []),
-      ?HAL_LINK(processes, <<"/processes">>, []) ],
+    [ ?HAL_LINK(self, <<"/memory">>, []) ],
     [],
-    []
+    [?HAL_PROPERTY_OBJECT([?HAL_PROPERTY(Key, Value) || {Key, Value} <- Memory])]
   ),
 
   pera_hal_serializer:to_json(Resource).
