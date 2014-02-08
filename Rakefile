@@ -1,3 +1,7 @@
+task :test do
+  sh "rebar eunit skip_deps=true"
+end
+
 task :shell do
   sh "erl -pa ebin deps/*/ebin"
 end
