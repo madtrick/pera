@@ -41,7 +41,6 @@ resource_with_list_in_property_to_json_test() ->
     )
   ),
 
-  ?debugMsg(JSON),
   ?assert(JSON == <<"{\"_links\":{},\"_embedded\":{},\"1\":[2,3,4]}">>).
 
 resource_with_nested_collection_of_objects_to_json_test() ->
@@ -59,7 +58,6 @@ resource_with_nested_collection_of_objects_to_json_test() ->
     )
   ),
 
-  ?debugMsg(JSON),
   ?assert(JSON == <<"{\"_links\":{},\"_embedded\":{},\"1\":[{\"2\":3},{\"4\":5}]}">>).
 
 resource_with_links_to_json_test() ->
