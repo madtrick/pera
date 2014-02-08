@@ -21,8 +21,10 @@ to_hal(_) ->
   Resource = ?HAL_RESOURCE(
     [
       ?HAL_LINK(self, <<"/">>, []),
-      ?HAL_LINK(memory, <<"/memory">>, []),
-      ?HAL_LINK(processes, <<"/processes">>, []) ],
+      ?HAL_LINK(curies, <<"/relations/{rel}">>,[{templated, true}, {name, pera}]),
+      ?HAL_LINK('pera:memory', <<"/memory">>, []),
+      ?HAL_LINK('pera:modules', <<"/modules">>, []),
+      ?HAL_LINK('pera:processes', <<"/processes">>, []) ],
     [],
     []
   ),
