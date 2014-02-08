@@ -1,9 +1,22 @@
 -module(pera_resource).
--export([init/1, to_html/2]).
+
+-export([content_types_provided/2]).
+-export([init/1]).
+-export([to_hal_json/2]).
 
 -include_lib("webmachine/include/webmachine.hrl").
 
+%%========================================
+%% Webmachine resource functions
+%%========================================
 init([]) -> {ok, undefined}.
 
-to_html(ReqData, State) ->
-    {"<html><body>Hello, new world</body></html>", ReqData, State}.
+content_types_provided(Req, Context) ->
+  Response = pera_rep_root:to_hal([]),
+  {[{"application/hal+json", to_hal_json}], Req, Response}.
+
+%%========================================
+%% Resource functions
+%%========================================
+to_hal_json(Req, Response) ->
+  {Response, Req, Response}.
