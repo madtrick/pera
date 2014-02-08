@@ -30,7 +30,12 @@ resource_to_json_object(Resource) ->
   {ok, Embedded}   = pera_hal_resource_data:get(embedded, Resource),
   {ok, Properties} = pera_hal_resource_data:get(properties, Resource),
 
-  pera_json:object([{<<"_links">>, resource_links_to_json(Links)} | [  {<<"_embedded">>, resource_embeddeds_to_json_object(Embedded)} | Properties ]]).
+  pera_json:object([
+      {<<"_links">>, resource_links_to_json(Links)} |
+        [  {<<"_embedded">>, resource_embeddeds_to_json_object(Embedded)} |
+          resource_property_objects_to_json_properties(Properties)
+        ]
+      ]).
 
 -spec resource_links_to_json(
   Links :: list(pera_hal_link())
@@ -99,3 +104,59 @@ resource_embedded_to_json_object(Embedded) ->
     Resource ->
       {Rel, resource_to_json_object(Resource)}
   end.
+
+-spec resource_property_objects_to_json_properties(
+  PropertyObjects :: list(pera_hal_resource_property_object())
+  ) -> list(pera_json:json_property()).
+resource_property_objects_to_json_properties([]) ->
+  [];
+resource_property_objects_to_json_properties(PropertyObjects) ->
+  resource_property_objects_to_json_properties(PropertyObjects, []).
+
+-spec resource_property_objects_to_json_properties(
+  PropertyObjects :: list(pera_hal_resource_property_object()),
+  Acc             :: list(pera_json:json_property())
+  ) -> list(pera_json:json_property()).
+resource_property_objects_to_json_properties([], Acc) ->
+  lists:flatten(Acc);
+resource_property_objects_to_json_properties([Object | Tail], Acc) ->
+  resource_property_objects_to_json_properties(Tail, [resource_property_object_to_json_properties(Object) | Acc]).
+
+-spec resource_property_object_to_json_properties(
+  Properties :: pera_hal_resource_property_object()
+  ) -> list(pera_json:json_property()).
+resource_property_object_to_json_properties({object, Properties}) ->
+  resource_object_properties_to_json_properties(Properties).
+
+-spec resource_object_properties_to_json_properties(
+  Properties :: list(pera_hal_resource_property())
+) -> list(pera_json:json_property()).
+resource_object_properties_to_json_properties([]) ->
+  [];
+resource_object_properties_to_json_properties(Properties) ->
+  resource_object_properties_to_json_properties(Properties, []).
+
+-spec resource_object_properties_to_json_properties(
+  Properties :: list(pera_hal_resource_property()),
+  Acc        :: list(pera_json:json_property())
+  ) -> list(pera_json:json_property()).
+resource_object_properties_to_json_properties([], Acc) ->
+  Acc;
+resource_object_properties_to_json_properties([Property | Tail], Acc) ->
+  resource_object_properties_to_json_properties(Tail, [resource_property_to_json_property(Property) | Acc]).
+
+-spec resource_property_to_json_property(
+  Property :: pera_hal_resource_property()
+  ) -> pera_json:json_property().
+resource_property_to_json_property({Key, Value}) ->
+  {Key, resource_property_value_to_json_value(Value)}.
+
+-spec resource_property_value_to_json_value(
+  Value :: pera_hal_resource_property_value()
+  ) -> pera_json:json_value().
+resource_property_value_to_json_value(Value = {object, Properties}) ->
+  pera_json:object(resource_property_object_to_json_properties(Value));
+resource_property_value_to_json_value(Value) when is_list(Value) ->
+  pera_json:array([resource_property_value_to_json_value(X) || X <- Value]);
+resource_property_value_to_json_value(Value) ->
+  Value.

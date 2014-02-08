@@ -16,6 +16,8 @@
 -type json_object()   :: {object, json_impl_object()}.
 -type json_array()    :: {array, json_impl_array()}.
 
+-export_type([json_key/0]).
+-export_type([json_value/0]).
 -export_type([json_property/0]).
 -export_type([json_object/0]).
 -export_type([json_array/0]).
