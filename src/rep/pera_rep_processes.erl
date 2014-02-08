@@ -1,4 +1,5 @@
 -module(pera_rep_processes).
+-include("pera_hal_macros.hrl").
 
 %% @hidden
 %% @doc Module that returns representations of a collection
@@ -14,18 +15,18 @@
   Options :: list({atom(), any()})
   ) -> binary().
 to_hal(Data, _) ->
-  Resource = pera_hal:resource(
-    [pera_hal:link(<<"self">>, <<"/processes">>, [])],
-    [{<<"processes">>, [
-          pera_hal:resource(
-            [pera_hal:link(<<"self">>, <<"/processes/", (pera_utils:pid_to_binary(Process))/binary>>, [])],
-            [],
-            [{<<"pid">>, pera_utils:pid_to_binary(Process)}]
-          )
-          || Process <- Data]
-      }],
-    [{<<"total">>, erlang:length(Data)}]
-  ),
+  Resource = ?HAL_RESOURCE(
+      [?HAL_LINK(self, <<"/processes">>, [])],
+      [?HAL_EMBEDDED(processes, [
+            ?HAL_RESOURCE(
+              [?HAL_LINK(self, <<"/processes/", (pera_utils:pid_to_binary(Process))/binary>>, [])],
+              [],
+              [?HAL_PROPERTY_OBJECT([{pid, pera_utils:pid_to_binary(Process)}])]
+            )
+          || Process <- Data])
+      ],
+      [?HAL_PROPERTY_OBJECT([{total, erlang:length(Data)}])]
+    ),
 
   pera_hal_serializer:to_json(Resource).
 
