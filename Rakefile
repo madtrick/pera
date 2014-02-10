@@ -7,5 +7,10 @@ task :shell do
 end
 
 task :start do
-  sh "exec erl -pa ebin deps/*/ebin -boot start_sasl -s reloader -s pera"
+  #
+  # Include `pwd` in the path to ebin so code:priv_dir works. See:
+  #
+  # http://erlang.org/pipermail/erlang-questions/2011-October/062024.html
+  #
+  sh "exec erl -pa `pwd`/ebin deps/*/ebin -boot start_sasl -s reloader -s pera"
 end
