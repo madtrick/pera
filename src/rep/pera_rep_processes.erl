@@ -29,4 +29,3 @@ to_hal(Data, _) ->
     ),
 
   pera_hal_serializer:to_json(Resource).
-
