@@ -63,7 +63,7 @@ resource_with_nested_collection_of_objects_to_json_test() ->
 resource_with_links_to_json_test() ->
   JSON = pera_hal_serializer:to_json(
     ?HAL_RESOURCE(
-      [?HAL_LINK(self, <<"/self">>, [])],
+      [?HAL_REL(self, ?HAL_LINK(<<"/self">>, []))],
       [],
       []
     )
@@ -71,11 +71,26 @@ resource_with_links_to_json_test() ->
 
   ?assert(JSON == <<"{\"_links\":{\"self\":{\"href\":\"/self\"}},\"_embedded\":{}}">>).
 
+resource_with_multiple_links_per_rel_to_json_test() ->
+  JSON = pera_hal_serializer:to_json(
+    ?HAL_RESOURCE(
+      [?HAL_REL(test,
+          [
+            ?HAL_LINK(<<"/test">>, []),
+            ?HAL_LINK(<<"/test2">>, [])
+          ])],
+      [],
+      []
+    )
+  ),
+
+  ?assert(JSON == <<"{\"_links\":{\"test\":[{\"href\":\"/test\"},{\"href\":\"/test2\"}]},\"_embedded\":{}}">>).
+
 resource_with_links_and_embedded_to_json_test() ->
   JSON = pera_hal_serializer:to_json(
     ?HAL_RESOURCE(
-      [?HAL_LINK(self, <<"/self">>, [])],
-      [?HAL_EMBEDDED(<<"thing">>, ?HAL_RESOURCE([?HAL_LINK(self, <<"/self/1">>, [])], [], []))],
+      [?HAL_REL(self, ?HAL_LINK(<<"/self">>, []))],
+      [?HAL_EMBEDDED(<<"thing">>, ?HAL_RESOURCE([?HAL_REL(self, ?HAL_LINK(<<"/self/1">>, []))], [], []))],
       []
     )
   ),
@@ -86,11 +101,11 @@ resource_with_links_and_embedded_to_json_test() ->
 resource_with_links_and_embeddeds_to_json_test() ->
   JSON = pera_hal_serializer:to_json(
     ?HAL_RESOURCE(
-      [?HAL_LINK(self, <<"/self">>, [])],
+      [?HAL_REL(self, ?HAL_LINK(<<"/self">>, []))],
       [?HAL_EMBEDDED(<<"things">>,
           [
-            ?HAL_RESOURCE([?HAL_LINK(self, <<"/self/1">>, [])], [], []),
-            ?HAL_RESOURCE([?HAL_LINK(self, <<"/self/2">>, [])], [], [])
+            ?HAL_RESOURCE([?HAL_REL(self, ?HAL_LINK(<<"/self/1">>, []))], [], []),
+            ?HAL_RESOURCE([?HAL_REL(self, ?HAL_LINK(<<"/self/2">>, []))], [], [])
           ]
         )
       ],

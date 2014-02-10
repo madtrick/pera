@@ -16,10 +16,10 @@
   ) -> binary().
 to_hal(Data, _) ->
   Resource = ?HAL_RESOURCE(
-      [?HAL_LINK(self, <<"/processes">>, [])],
+      [?HAL_REL(self, ?HAL_LINK(<<"/processes">>, []))],
       [?HAL_EMBEDDED(processes, [
             ?HAL_RESOURCE(
-              [?HAL_LINK(self, <<"/processes/", (pera_utils:pid_to_binary(Process))/binary>>, [])],
+              [?HAL_REL(self, ?HAL_LINK(<<"/processes/", (pera_utils:pid_to_binary(Process))/binary>>, []))],
               [],
               [?HAL_PROPERTY_OBJECT([{pid, pera_utils:pid_to_binary(Process)}])]
             )

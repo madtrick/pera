@@ -1,31 +1,28 @@
 -module(pera_hal_link_data).
 -include("pera.hrl").
 
--export([new/3]).
+-export([new/2]).
 -export([get/2]).
 
 %%========================================
 %% API
 %%========================================
 -spec new(
-  Rel     :: atom() | binary(),
   HREF    :: binary(),
   Options :: list(pera_hal_link_option())
   ) -> pera_hal_link().
-new(Rel, HREF, Options) ->
+new(HREF, Options) ->
   #pera_hal_link_data{
-    rel     = Rel,
     href    = HREF,
     options = Options
   }.
 
 -spec get(
-  Property :: atom(),
+  Key      :: atom(),
   LinkData :: pera_hal_link()
   ) ->
-    any() |
+    {ok, any()} |
     undefined.
-get(rel, #pera_hal_link_data{ rel = Rel }) -> ok(Rel);
 get(href, #pera_hal_link_data{ href = HREF }) -> ok(HREF);
 get(templated, LinkData) -> get_optional(templated, LinkData);
 get(type, LinkData) -> get_optional(type, LinkData);

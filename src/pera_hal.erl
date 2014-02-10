@@ -6,7 +6,8 @@
 %% of resources according to the <a href="http://stateless.co/hal_specification.html">HAL+JSON</a>
 %% specification
 
--export([link/3]).
+-export([rel/2]).
+-export([link/2]).
 -export([resource/3]).
 
 
@@ -14,15 +15,23 @@
 %% API
 %%========================================
 
+%% @doc Create a hypermedia relation with a name
+%% and one or various links
+-spec rel(
+  Name  :: atom(),
+  Links :: pera_hal_link() | list(pera_hal_link())
+  ) -> pera_hal_rel().
+rel(Name, Links) ->
+  pera_hal_rel_data:new(Name, Links).
+
 %% @doc Creates a link with the expected fields
 %% for a HAL link
 -spec link(
-  Rel     :: atom() | binary(),
   HREF    :: binary(),
   Options :: list(pera_hal_link_option())
   ) -> pera_hal_link().
-link(Rel, HREF, Options) ->
-  pera_hal_link_data:new(Rel, HREF, Options).
+link(HREF, Options) ->
+  pera_hal_link_data:new(HREF, Options).
 
 %% @doc Creates a HAL resource
 -spec resource(

@@ -20,7 +20,7 @@
   ) -> binary().
 to_hal(Memory, _) ->
   Resource = ?HAL_RESOURCE(
-    [ ?HAL_LINK(self, <<"/memory">>, []) ],
+    [ ?HAL_REL(self, ?HAL_LINK(<<"/memory">>, [])) ],
     [],
     [?HAL_PROPERTY_OBJECT([?HAL_PROPERTY(Key, Value) || {Key, Value} <- Memory])]
   ),

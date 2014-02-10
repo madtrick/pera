@@ -8,13 +8,13 @@
 %% API
 %%========================================
 -spec new(
-  Links      :: list(pera_hal_link()),
-  Embedded   :: pera_hal_embedded() | list(pera_hal_embedded()),
+  Rels            :: list(pera_hal_rel()),
+  Embedded        :: pera_hal_embedded() | list(pera_hal_embedded()),
   PropertyObjects :: list(pera_hal_resource_property_object())
   ) -> pera_hal_resource().
-new(Links, Embedded, PropertiesObject) ->
+new(Rels, Embedded, PropertiesObject) ->
   #pera_hal_resource_data{
-    links      = Links,
+    rels       = Rels,
     embedded   = Embedded,
     properties = PropertiesObject
   }.
@@ -24,13 +24,13 @@ new(Links, Embedded, PropertiesObject) ->
   ResourceData :: pera_hal_resource()
   ) ->
   {ok,
-    list(pera_hal_link()) |
+    list(pera_hal_rel()) |
     pera_hal_embedded() |
     list(pera_hal_embedded()) |
     list(pera_hal_resource_property_object())
   } |
   undefined.
-get(links, #pera_hal_resource_data{ links = Value }) -> {ok, Value};
+get(rels, #pera_hal_resource_data{ rels = Value }) -> {ok, Value};
 get(embedded, #pera_hal_resource_data{ embedded = Value }) -> {ok, Value};
 get(properties, #pera_hal_resource_data{ properties = Value }) -> {ok, Value};
 get(_, _) -> undefined.

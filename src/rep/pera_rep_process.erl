@@ -48,10 +48,10 @@ get_properties_from_process(Process) ->
   ) -> list(pera_hal_link()).
 build_links(Pid) ->
   [
-    ?HAL_LINK(self, <<"/processes/", (pera_utils:pid_to_binary(Pid))/binary>>, []),
-    ?HAL_LINK(curies, <<"/relations/{rel}">>,[{templated, true}, {name, pera}]),
-    ?HAL_LINK('pera:modules', <<"/modules">>, []),
-    ?HAL_LINK('pera:module', <<"/modules/{module}">>, [{templated, true}])
+    ?HAL_REL(self, ?HAL_LINK(<<"/processes/", (pera_utils:pid_to_binary(Pid))/binary>>, [])),
+    ?HAL_REL(curies, ?HAL_LINK(<<"/relations/{rel}">>,[{templated, true}, {name, pera}])),
+    ?HAL_REL('pera:modules', ?HAL_LINK(<<"/modules">>, [])),
+    ?HAL_REL('pera:module', ?HAL_LINK(<<"/modules/{module}">>, [{templated, true}]))
   ].
 
 -spec build_property_objects(
