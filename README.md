@@ -75,6 +75,13 @@ Location of the documentation for the relations accessible from a resource is gi
 
 For example, the previous resource points out that you could find info about ```pera:module``` relation at ```/relations/module``` or for ```pera:modules``` at ```/relations/modules```.
 
+### HAL browser
+![hal browser](https://raw.github.com/madtrick/pera/readme-assets/readme-assets/hal-browser.png)
+
+The [HAL browser](https://github.com/mikekelly/hal-browser) is included in the aplication to help with the usage of the API and to highlight the benefits of auto-discoverable resources. To use it, point your browser to [http://localhost:8000/hal-browser/](http://localhost:8000/hal-browser/) and navigate through the available resources and documentation.
+
+
+
 ## Usage  <a name="usage"></a>
 Start the PERA application and the API will be available at ```0.0.0.0:8000```.
 
