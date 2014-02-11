@@ -21,8 +21,14 @@ content_types_provided(Req, Context) ->
       end,
       Response = pera_rep_processes:to_hal(Processes, []),
       {[{"application/hal+json", to_hal_json}], Req, Response};
-    Pid ->
-      Process = pera_processes:find(http_uri:decode(Pid)),
+    EncodedPidValue ->
+      Pid = process_pid_from_string_to_pid(http_uri:decode(EncodedPidValue)),
+      Items = case wrq:get_qs_value("items", Req) of
+        undefined -> [];
+        ItemsQuery-> query_list_values_to_atom_list(ItemsQuery)
+      end,
+
+      Process = pera_processes:find(Pid, Items),
       Response = pera_rep_process:to_hal(Process, []),
       {[{"application/hal+json", to_hal_json}], Req, Response}
   end.
@@ -32,3 +38,19 @@ content_types_provided(Req, Context) ->
 %%========================================
 to_hal_json(Req, Response) ->
   {Response, Req, Response}.
+
+
+%%========================================
+%% Helpers
+%%========================================
+-spec query_list_values_to_atom_list(
+  Query :: string()
+  ) -> list(atom()).
+query_list_values_to_atom_list(Query) ->
+  lists:map((fun(X) -> list_to_atom(X) end), string:tokens(Query, ",")).
+
+-spec process_pid_from_string_to_pid(
+  String :: string()
+  ) -> pid().
+process_pid_from_string_to_pid(String) ->
+  list_to_pid(String).
