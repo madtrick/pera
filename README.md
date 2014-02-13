@@ -65,16 +65,12 @@ Location of the documentation for the relations accessible from a resource is gi
             "name": "pera",
             "templated": true
         },
-        "pera:module": {
-            "href": "/modules/{module}",
-            "templated": true
-        },
         "pera:modules": {
             "href": "/modules"
         },
 ```
 
-For example, the previous resource points out that you could find info about ```pera:module``` relation at ```/relations/module``` or for ```pera:modules``` at ```/relations/modules```.
+For example, the previous resource points out that you could find info about ```pera:modules``` at ```/relations/modules```.
 
 ### HAL browser
 ![hal browser](https://raw.github.com/madtrick/pera/readme-assets/readme-assets/hal-browser.png)

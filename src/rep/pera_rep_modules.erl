@@ -22,8 +22,7 @@ to_hal(Modules, _) ->
   Resource = ?HAL_RESOURCE(
     [
       ?HAL_REL(self, ?HAL_LINK(<<"/modules">>, [])),
-      ?HAL_REL(curies, ?HAL_LINK(<<"/relations/{rel}.html">>,[{templated, true}, {name, pera}])),
-      ?HAL_REL('pera:module', ?HAL_LINK(<<"/modules/{module}">>, [{templated, true}]))
+      ?HAL_REL(curies, ?HAL_LINK(<<"/relations/{rel}.html">>,[{templated, true}, {name, pera}]))
     ],
     [],
     [?HAL_PROPERTY_OBJECT([?HAL_PROPERTY(Key, ensure_atom_or_binary_value(Value)) || {Key, Value} <- Modules])]

@@ -51,7 +51,6 @@ build_links(Pid) ->
     ?HAL_REL(self, ?HAL_LINK(<<"/processes/", (pera_utils:pid_to_binary(Pid))/binary>>, [])),
     ?HAL_REL(curies, [?HAL_LINK(<<"/relations/{rel}.html">>,[{templated, true}, {name, pera}])]),
     ?HAL_REL('pera:modules', ?HAL_LINK(<<"/modules">>, [])),
-    ?HAL_REL('pera:module', ?HAL_LINK(<<"/modules/{module}">>, [{templated, true}])),
     ?HAL_REL('pera:process', ?HAL_LINK(<<"/processes/", (pera_utils:pid_to_binary(Pid))/binary, "{?items}">>, [{templated, true}]))
   ].
 
