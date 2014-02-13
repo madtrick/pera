@@ -1,5 +1,8 @@
 #Change Log
 
+###0.4.1
+  * Return all the properties for a given process if no 'items' query param is given.
+
 ###0.4.0
   * New resource: /system which shows info about the emulator.
 

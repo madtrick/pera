@@ -23,14 +23,15 @@ content_types_provided(Req, Context) ->
       {[{"application/hal+json", to_hal_json}], Req, Response};
     EncodedPidValue ->
       Pid = process_pid_from_string_to_pid(http_uri:decode(EncodedPidValue)),
-      Items = case wrq:get_qs_value("items", Req) of
-        undefined -> [];
-        ItemsQuery-> query_list_values_to_atom_list(ItemsQuery)
-      end,
-
-      Process = pera_processes:find(Pid, Items),
-      Response = pera_rep_process:to_hal(Process, []),
-      {[{"application/hal+json", to_hal_json}], Req, Response}
+      case wrq:get_qs_value("items", Req) of
+        undefined ->
+          Response = pera_rep_process:to_hal(pera_processes:find(Pid), []),
+          {[{"application/hal+json", to_hal_json}], Req, Response};
+        ItemsQuery->
+          Items = query_list_values_to_atom_list(ItemsQuery),
+          Response = pera_rep_process:to_hal(pera_processes:find(Pid, Items), []),
+          {[{"application/hal+json", to_hal_json}], Req, Response}
+      end
   end.
 
 %%========================================
