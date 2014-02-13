@@ -24,7 +24,8 @@ to_hal(_) ->
       ?HAL_REL(curies, [?HAL_LINK(<<"/relations/{rel}.html">>,[{templated, true}, {name, pera}])]),
       ?HAL_REL('pera:memory', ?HAL_LINK(<<"/memory">>, [])),
       ?HAL_REL('pera:modules', ?HAL_LINK(<<"/modules">>, [])),
-      ?HAL_REL('pera:processes', ?HAL_LINK(<<"/processes">>, []))
+      ?HAL_REL('pera:processes', ?HAL_LINK(<<"/processes">>, [])),
+      ?HAL_REL('pera:system', ?HAL_LINK(<<"/system">>, []))
     ],
     [],
     []

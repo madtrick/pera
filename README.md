@@ -34,6 +34,7 @@ The resources group info about the Erlang runtime in way that is easy an useful 
 The exposed resources are:
 
 * ```/``` : root of the API. Contains links to the other exposed resources.
+* ```system``` : info about the emulator.
 * ```/processes``` : collection of all running processes.
 * ```/processes/:pid``` : a single running process.
 * ```/modules``` : collection of all the loaded modules.
@@ -90,7 +91,6 @@ Start the PERA application and the API will be available at ```0.0.0.0:8000```.
 
 * Add more resources. For example:
 	* ```/modules/:module```: info about a module.
-	* ```/system``` : general info about the runtime.
 	* ```/system/allocators``` : info about the current allocators.
 	* ```/system/cpu``` : info about de CPU topology.
 * Allow parameterized requests so the response contain only the neccesary info.
