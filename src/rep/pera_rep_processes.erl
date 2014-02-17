@@ -19,7 +19,7 @@ to_hal(Data, _) ->
       [?HAL_REL(self, ?HAL_LINK(<<"/processes">>, []))],
       [?HAL_EMBEDDED(processes, [
             ?HAL_RESOURCE(
-              [?HAL_REL(self, ?HAL_LINK(<<"/processes/", (pera_utils:pid_to_binary(Process))/binary>>, []))],
+              [?HAL_REL(self, ?HAL_LINK(<<"/processes/", (list_to_binary(pera_utils:urlencode_pid(Process)))/binary>>, []))],
               [],
               [?HAL_PROPERTY_OBJECT([{pid, pera_utils:pid_to_binary(Process)}])]
             )
